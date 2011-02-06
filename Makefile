@@ -45,6 +45,13 @@ dev: etorrent-dev
 devclean:
 	rm -fr dev
 
+ctclean:
+	rm -f apps/etorrent/test/etorrent_SUITE_data/test_file_30M.random
+
+ct:
+	mkdir -p apps/etorrent/test/etorrent_SUITE_data
+	rebar ct
+
 console:
 	dev/etorrent-dev/bin/etorrent console \
 		-pa ../../apps/etorrent/ebin \
@@ -67,11 +74,18 @@ depgraph.dot: compile
 
 .PHONY: all compile tags dialyze run tracer clean \
 	eunit rel xref dev console console-perf graph \
-	deps
+	deps ct
 
 %.png: %.dot
 	dot -Tpng $< > $@
 
 %.pdf: %.dot
 	dot -Tpdf $< > $@
+
+
+
+
+
+
+
 

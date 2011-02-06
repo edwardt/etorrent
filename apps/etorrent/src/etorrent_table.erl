@@ -75,7 +75,7 @@ all_torrents() ->
 %% @doc Alter the state of the Tracking map identified by Id
 %%   <p>by What (see alter_map/2).</p>
 %% @end
--type alteration() :: {infohash, binary()} | started | stopped.
+-type alteration() :: {infohash, binary()} | started | stopped | checking.
 -spec statechange_torrent(integer(), alteration()) -> ok.
 statechange_torrent(Id, What) ->
     [O] = ets:lookup(tracking_map, Id),
@@ -291,6 +291,8 @@ alter_map(TM, What) ->
     case What of
         {infohash, IH} ->
             TM#tracking_map { info_hash = IH };
+	checking ->
+	    TM#tracking_map { state = checking };
         started ->
             TM#tracking_map { state = started };
         stopped ->

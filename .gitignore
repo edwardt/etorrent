@@ -3,6 +3,7 @@
 /apps/etorrent/ebin/etorrent.app
 /apps/etorrent/.eunit
 /apps/etorrent/src/tags
+/apps/etorrent/logs
 *.beam
 deps/*
 /dev
@@ -22,4 +23,5 @@ webui/*.log
 /documentation/sup_tree_20101220.png
 /documentation/sup_tree_20110106.pdf
 /documentation/sup_tree_20110106.png
+/apps/etorrent/test/etorrent_SUITE_data/test_file_30M.random
 
