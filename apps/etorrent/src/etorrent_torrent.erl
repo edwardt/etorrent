@@ -301,6 +301,7 @@ update_sparkline(NR, L) ->
 state_change(_Id, []) ->
     ok;
 state_change(Id, [What | Rest]) ->
+    %% @todo Be more protective here
     [T] = ets:lookup(?TAB, Id),
     New = case What of
               unknown ->
