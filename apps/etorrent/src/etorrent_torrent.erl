@@ -106,7 +106,7 @@ statechange(Id, What) ->
 
 %% @doc Return the number of pieces for torrent Id
 %% @end
--spec num_pieces(integer()) -> {value, integer()}.
+-spec num_pieces(integer()) -> {value, integer()} | not_found.
 num_pieces(Id) ->
     gen_server:call(?SERVER, {num_pieces, Id}).
 
@@ -195,8 +195,11 @@ handle_call(all, _F, S) ->
     Q = all(#torrent.id),
     {reply, Q, S};
 handle_call({num_pieces, Id}, _F, S) ->
-    [R] = ets:lookup(?TAB, Id),
-    {reply, {value, R#torrent.pieces}, S};
+    Reply = case ets:lookup(?TAB, Id) of
+		[R] -> {value, R#torrent.pieces};
+		[] ->  not_found
+	    end,
+    {reply, Reply, S};
 handle_call({statechange, Id, What}, _F, S) ->
     Q = state_change(Id, What),
     {reply, Q, S};
@@ -331,3 +334,5 @@ state_change(Id, [What | Rest]) ->
             ok
     end,
     state_change(Id, Rest).
+
+
