@@ -28,3 +28,4 @@ webui/*.log
 /logs/
 /apps/utp/ebin/utp.app
 /apps/utp/.eunit/
+/documentation/utp.pdf
